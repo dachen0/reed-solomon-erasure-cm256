@@ -158,6 +158,10 @@ fn write_tables() {
     not(any(target_os = "android", target_os = "ios"))
 ))]
 fn compile_simd_c() {
+    println!("cargo:rerun-if-changed=simd_c/reedsolomon.c");
+    println!("cargo:rerun-if-changed=simd_c/reedsolomon.h");
+    println!("cargo:rerun-if-env-changed=RUST_REED_SOLOMON_ERASURE_ARCH");
+
     let mut build = cc::Build::new();
     build.opt_level(3);
 

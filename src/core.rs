@@ -482,8 +482,7 @@ impl<F: Field> ReedSolomon<F> {
         let total_shards = data_shards + parity_shards;
 
         let matrix = Self::build_matrix(data_shards, total_shards);
-        let single_data_decode_rows =
-            Self::build_single_data_decode_rows(&matrix, data_shards);
+        let single_data_decode_rows = Self::build_single_data_decode_rows(&matrix, data_shards);
 
         Ok(ReedSolomon {
             data_shard_count: data_shards,
@@ -985,10 +984,7 @@ impl<F: Field> ReedSolomon<F> {
             SmallVec::with_capacity(number_missing_data);
 
         if single_missing_data {
-            matrix_rows.push(
-                self.single_data_decode_rows
-                    .get_row(invalid_indices[0]),
-            );
+            matrix_rows.push(self.single_data_decode_rows.get_row(invalid_indices[0]));
         } else if let Some(data_decode_matrix) = data_decode_matrix.as_ref() {
             for &i_slice in &invalid_indices[..number_missing_data] {
                 matrix_rows.push(data_decode_matrix.get_row(i_slice));
